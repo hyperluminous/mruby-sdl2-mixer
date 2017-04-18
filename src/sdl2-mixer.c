@@ -1,4 +1,5 @@
 #include "sdl2-mixer.h"
+#include <SDL_mixer.h>
 #include "mruby.h"
 #include "mruby/class.h"
 #include "mruby/data.h"
@@ -199,7 +200,7 @@ mrb_sdl2_mixer_music_initialize(mrb_state *mrb, mrb_value self)
     mrb_int type;
     SDL_RWops *rwops;
     mrb_get_args(mrb, "oi", &rw, &type);
-    rwops = mrb_sdl2_rwops_get_ptr(mrb, rw);  
+    rwops = mrb_sdl2_rwops_get_ptr(mrb, rw);
     music = Mix_LoadMUSType_RW(rwops, (Mix_MusicType) type, 0);
   } else {
     mrb_free(mrb, data);
@@ -264,7 +265,7 @@ mrb_sdl2_mixer_query_spec(mrb_state *mrb, mrb_value self)
 	mrb_ary_push(mrb, array, mrb_fixnum_value(channels));
 
 	return array;
-}	
+}
 
 static mrb_value
 mrb_sdl2_mixer_GetNumChunkDecoders(mrb_state *mrb, mrb_value self)
@@ -406,7 +407,7 @@ mrb_sdl2_mixer_music_play(mrb_state *mrb, mrb_value self)
   int result;
   mrb_get_args(mrb, "i", &loops);
   c = mrb_sdl2_music_get_ptr(mrb, self);
-  if ((result = Mix_PlayMusic(c, loops)) == -1) 
+  if ((result = Mix_PlayMusic(c, loops)) == -1)
     mruby_sdl2_raise_error(mrb);
   return mrb_fixnum_value(result);
 }
