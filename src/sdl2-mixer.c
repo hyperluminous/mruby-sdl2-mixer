@@ -774,18 +774,25 @@ mrb_mruby_sdl2_mixer_gem_init(mrb_state *mrb)
   mrb_define_const(mrb, mod_Mixer, "MUS_MID",      mrb_fixnum_value(MUS_MID));
   mrb_define_const(mrb, mod_Mixer, "MUS_OGG",      mrb_fixnum_value(MUS_OGG));
   mrb_define_const(mrb, mod_Mixer, "MUS_MP3",      mrb_fixnum_value(MUS_MP3));
-  mrb_define_const(mrb, mod_Mixer, "MUS_MP3_MAD",  mrb_fixnum_value(MUS_MP3_MAD));
   mrb_define_const(mrb, mod_Mixer, "MUS_FLAC",     mrb_fixnum_value(MUS_FLAC));
-  mrb_define_const(mrb, mod_Mixer, "MUS_MODPLUG",  mrb_fixnum_value(MUS_MODPLUG));
+#if ! SDL_MIXER_VERSION_ATLEAST(2,0,2)
+  mrb_define_const(mrb, mod_Mixer, "MUS_MP3_MAD",  mrb_fixnum_value(MUS_MP3_MAD)); // obsolete@SDL2_mixer-2.0.2
+  mrb_define_const(mrb, mod_Mixer, "MUS_MODPLUG",  mrb_fixnum_value(MUS_MODPLUG)); // obsolete@SDL2_mixer-2.0.2
+#endif
   mrb_gc_arena_restore(mrb, arena_size);
 
   arena_size = mrb_gc_arena_save(mrb);
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_FLAC",       mrb_fixnum_value(MIX_INIT_FLAC));
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MOD",        mrb_fixnum_value(MIX_INIT_MOD));
-  mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MODPLUG",    mrb_fixnum_value(MIX_INIT_MODPLUG));
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MP3",        mrb_fixnum_value(MIX_INIT_MP3));
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_OGG",        mrb_fixnum_value(MIX_INIT_OGG));
+#if SDL_MIXER_VERSION_ATLEAST(2,0,2)
+  mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MID", mrb_fixnum_value(MIX_INIT_MID));
+#else
+  // obsolete@SDL2_mixer-2.0.2
+  mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MODPLUG",    mrb_fixnum_value(MIX_INIT_MODPLUG));
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_FLUIDSYNTH", mrb_fixnum_value(MIX_INIT_FLUIDSYNTH));
+#endif
   mrb_gc_arena_restore(mrb, arena_size);
 }
 
