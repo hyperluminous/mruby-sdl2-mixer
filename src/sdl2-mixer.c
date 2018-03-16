@@ -680,7 +680,6 @@ mrb_sdl2_mixer_quit(mrb_state *mrb, mrb_value self)
 void
 mrb_mruby_sdl2_mixer_gem_init(mrb_state *mrb)
 {
-  int arena_size;
 	struct RClass *mod_Mixer = mrb_define_module_under(mrb, mod_SDL2, "Mixer");
   class_Chunk = mrb_define_class_under(mrb, mod_Mixer, "Chunk", mrb->object_class);
   class_Music = mrb_define_class_under(mrb, mod_Mixer, "Music", mrb->object_class);
@@ -751,22 +750,16 @@ mrb_mruby_sdl2_mixer_gem_init(mrb_state *mrb)
   mrb_define_method(mrb, class_Music, "fade_in",     mrb_sdl2_mixer_music_fade_in,     MRB_ARGS_REQ(2));
   mrb_define_method(mrb, class_Music, "fade_in_pos", mrb_sdl2_mixer_music_fade_in_pos, MRB_ARGS_REQ(2));
 
-
-  arena_size = mrb_gc_arena_save(mrb);
   mrb_define_const(mrb, mod_Mixer, "MIX_CHANNELS",          mrb_fixnum_value(MIX_CHANNELS));
   mrb_define_const(mrb, mod_Mixer, "MIX_DEFAULT_FREQUENCY", mrb_fixnum_value(MIX_DEFAULT_FREQUENCY));
   mrb_define_const(mrb, mod_Mixer, "MIX_DEFAULT_FORMAT",    mrb_fixnum_value(MIX_DEFAULT_FORMAT));
   mrb_define_const(mrb, mod_Mixer, "MIX_DEFAULT_CHANNELS",  mrb_fixnum_value(MIX_DEFAULT_CHANNELS));
   mrb_define_const(mrb, mod_Mixer, "MIX_MAX_VOLUME",        mrb_fixnum_value(MIX_MAX_VOLUME));
-  mrb_gc_arena_restore(mrb, arena_size);
 
-  arena_size = mrb_gc_arena_save(mrb);
   mrb_define_const(mrb, mod_Mixer, "MIX_NO_FADING",  mrb_fixnum_value(MIX_NO_FADING));
   mrb_define_const(mrb, mod_Mixer, "MIX_FADING_OUT", mrb_fixnum_value(MIX_FADING_OUT));
   mrb_define_const(mrb, mod_Mixer, "MIX_FADING_IN",  mrb_fixnum_value(MIX_FADING_IN));
-  mrb_gc_arena_restore(mrb, arena_size);
 
-  arena_size = mrb_gc_arena_save(mrb);
   mrb_define_const(mrb, mod_Mixer, "MUS_NONE",     mrb_fixnum_value(MUS_NONE));
   mrb_define_const(mrb, mod_Mixer, "MUS_CMD",      mrb_fixnum_value(MUS_CMD));
   mrb_define_const(mrb, mod_Mixer, "MUS_WAV",      mrb_fixnum_value(MUS_WAV));
@@ -775,25 +768,16 @@ mrb_mruby_sdl2_mixer_gem_init(mrb_state *mrb)
   mrb_define_const(mrb, mod_Mixer, "MUS_OGG",      mrb_fixnum_value(MUS_OGG));
   mrb_define_const(mrb, mod_Mixer, "MUS_MP3",      mrb_fixnum_value(MUS_MP3));
   mrb_define_const(mrb, mod_Mixer, "MUS_FLAC",     mrb_fixnum_value(MUS_FLAC));
-#if ! SDL_MIXER_VERSION_ATLEAST(2,0,2)
-  mrb_define_const(mrb, mod_Mixer, "MUS_MP3_MAD",  mrb_fixnum_value(MUS_MP3_MAD)); // obsolete@SDL2_mixer-2.0.2
-  mrb_define_const(mrb, mod_Mixer, "MUS_MODPLUG",  mrb_fixnum_value(MUS_MODPLUG)); // obsolete@SDL2_mixer-2.0.2
-#endif
-  mrb_gc_arena_restore(mrb, arena_size);
+  // mrb_define_const(mrb, mod_Mixer, "MUS_MP3_MAD",  mrb_fixnum_value(MUS_MP3_MAD)); // obsolete@SDL2_mixer-2.0.2
+  // mrb_define_const(mrb, mod_Mixer, "MUS_MODPLUG",  mrb_fixnum_value(MUS_MODPLUG)); // obsolete@SDL2_mixer-2.0.2
 
-  arena_size = mrb_gc_arena_save(mrb);
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_FLAC",       mrb_fixnum_value(MIX_INIT_FLAC));
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MOD",        mrb_fixnum_value(MIX_INIT_MOD));
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MP3",        mrb_fixnum_value(MIX_INIT_MP3));
   mrb_define_const(mrb, mod_Mixer, "MIX_INIT_OGG",        mrb_fixnum_value(MIX_INIT_OGG));
-#if SDL_MIXER_VERSION_ATLEAST(2,0,2)
-  mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MID", mrb_fixnum_value(MIX_INIT_MID));
-#else
-  // obsolete@SDL2_mixer-2.0.2
-  mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MODPLUG",    mrb_fixnum_value(MIX_INIT_MODPLUG));
-  mrb_define_const(mrb, mod_Mixer, "MIX_INIT_FLUIDSYNTH", mrb_fixnum_value(MIX_INIT_FLUIDSYNTH));
-#endif
-  mrb_gc_arena_restore(mrb, arena_size);
+  // mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MID", mrb_fixnum_value(MIX_INIT_MID)); // new from SDL2_mixer-2.0.2
+  // mrb_define_const(mrb, mod_Mixer, "MIX_INIT_MODPLUG",    mrb_fixnum_value(MIX_INIT_MODPLUG)); // obsolete@SDL2_mixer-2.0.2
+  // mrb_define_const(mrb, mod_Mixer, "MIX_INIT_FLUIDSYNTH", mrb_fixnum_value(MIX_INIT_FLUIDSYNTH)); // obsolete@SDL2_mixer-2.0.2
 }
 
 void
