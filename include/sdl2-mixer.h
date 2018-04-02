@@ -9,6 +9,7 @@ extern "C" {
 #endif
 
 extern mrb_value mrb_sdl2_chunk(mrb_state *mrb, Mix_Chunk *value);
+extern mrb_value mrb_sdl2_music(mrb_state *mrb, Mix_Music *value);
 
 #ifdef __cplusplus
 }
